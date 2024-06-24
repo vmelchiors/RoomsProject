@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200px;
+    font-style: normal;
+    background-color: #e9e9e9;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 300px;
+    background-color: #e9e9e9;
+}
+
+.nome {
+    text-align: center;
+}
+
+.tabelaens {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login {
+    font-size: 17px;
+    cursor: pointer;
+    color: #9e8202;
+    padding: 6px 30px;
+    border: 2px solid #c7a50d;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+.login:hover{
+    padding: 6px 30px;
+    font-size: 17px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #c7a50d;
+}
+
+.downefilt1 {
+    padding: 10px 30px;
+    font-size: 16px;
+    margin-right: 500px;
+    color: #fff;
+    background-color: #c7a50d;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.downefilt1:hover{
+    padding: 8px 28.5px;
+    font-size: 16px;
+    border: 2px solid #c7a50d;
+    color: #9e8202;
+    background-color: transparent;
+}
+
+.downefilt2 {
+    padding: 10px 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #c7a50d;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.downefilt2:hover{
+    padding: 8px 28.5px;
+    font-size: 16px;
+    border: 2px solid #c7a50d;
+    color: #9e8202;
+    background-color: transparent;
+}
+
+.tabelastyle {
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.tabelastyle thead tr {
+    background-color: #c7a50d;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.tabelastyle th,
+.tabelastyle td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+.tabelastyle tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.tabelastyle tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.tabelastyle tbody tr:last-of-type {
+    border-bottom: 2px solid #c7a50d;
+}
+
+.tabelastyle tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tabelastyle th {
+    padding: 10px;
+}
+
+.tabelastyle td {
+    padding: 10px;
+}
+
+.buttonfiltros {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
