@@ -1,3 +1,137 @@
-*{
-    background: #000
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200px;
+  font-style: normal;
+    background-color: #e9e9e9;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 300px;
+    background-color: #e9e9e9;
+}
+
+.door {
+    margin-right: 50px;
+    margin-top: 80px;
+    height: 30%;
+    width: 30%;
+    max-width: 300px;
+}
+
+.door img {
+    width: 100%;
+    height: auto;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.login {
+    font-size: 17px;
+    cursor: pointer;
+    color: #9e8202;
+    padding: 6px 30px;
+    border: 2px solid #c7a50d;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+.login:hover{
+    padding: 6px 30px;
+    font-size: 17px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #c7a50d;
+}
+
+.apresentacao {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.opcoes{
+    margin-left: 300px;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.door{
+    margin-right: 300px;
+}
+
+.buttonalign{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slogan{
+    font-size: 45px;
+    margin: 0px
+}
+
+.subtitulo{
+    margin: 15px 0px;
+    font-size: 20px;
+    color: #4b4b4b;
+}
+
+.loginb {
+    padding: 10px 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #c7a50d;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.loginb:hover{
+    padding: 10px 28.5px;
+    font-size: 16px;
+    border: 2px solid #c7a50d;
+    color: #9e8202;
+    background-color: transparent;
+}
+
+.signup {
+    margin-right: 50px;
+    padding: 10px 30px;
+    font-size: 16px;
+    color: #9e8202;
+    background-color: transparent;
+    border: 2px solid #c7a50d;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.signup:hover{
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #c7a50d;
 }

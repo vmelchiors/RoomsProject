@@ -1,20 +1,37 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/planilhas.css' %}" />
+    <title>Ensalmentos</title>
 </head>
 <body>
-    <h1>Ensalamentos</h1>
-    <table>
-        <tr>
-            <th>Professor</th>
-            <th>Diciplina</th>
-            <th>Sala</th>
-            <th>Dia da Semana</th>
-            <th>Horario</th>
-        </tr>
-        {% for allocation in allocations %}
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Voltar</div>
+    </header>
+    <h1 class="nome">Ensalamentos</h1>
+    <div class="buttonfiltros">
+        <button class="downefilt1" >Download</button>
+        <button class="downefilt2" >Filtros</button>
+    </div>
+    <div class="tabelaens">
+        <table class="tabelastyle">
+            <thead>
+                <tr>
+                    <th>Professor</th>
+                    <th>Diciplina</th>
+                    <th>Sala</th>
+                    <th>Dia da Semana</th>
+                    <th>Horario</th>
+                </tr>
+            </thead>
+            {% for allocation in allocations %}
             <tr>
                 <td>{{ allocation.teacher }}</td>
                 <td>{{ allocation.discipline }}</td>
@@ -22,7 +39,8 @@
                 <td>{{ allocation.days_week }}</td>
                 <td>{{ allocation.timetable }}</td>
             </tr>
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>
