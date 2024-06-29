@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Space List</title>
+</head>
+<body>
+    <h1>Lista de Espaços Físicos</h1>
+    <ul>
+        {% for space in spaces %}
+            <li>{{ space.space_block }} - {{ space.space_number }} (Andar: {{ space.space_floor }}) - {% if space.space_type %}Laboratório{% else %}Sala{% endif %}
+                (<a href="{% url 'space_detail' pk=space.pk %}">Detalhes</a>)
+                (<a href="{% url 'space_update' pk=space.pk %}">Editar</a>)
+                (<a href="{% url 'space_delete' pk=space.pk %}">Excluir</a>)
+            </li>
+        {% empty %}
+            <li>Nenhum espaço físico encontrado.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'space_create' %}">Adicionar Novo Espaço Físico</a>
+</body>
+</html>

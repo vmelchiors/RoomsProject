@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Painel Administrativo</h1>
+    <div>
+        <a href="{% url 'allocation_list' %}">Alocações</a><br>
+        <a href="{% url 'discipline_list' %}">Disciplinas</a><br>
+        <a href="{% url 'space_list' %}">Salas/Laboratórios</a><br>
+        <a href="{% url 'teacher_list' %}">Professores</a><br>
+        <a href="{% url 'register' %}">Usuários</a><br>
+    </div>    
+</body>
+</html>

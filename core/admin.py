@@ -25,3 +25,4 @@ class PhysicalSpaceAdmin(admin.ModelAdmin):
 class AllocationAdmin(admin.ModelAdmin):
     list_display = ('allocation_id', 'teacher', 'discipline', 'space', 'days_week', 'timetable')
     search_fields = ('teacher__first_name', 'teacher__last_name', 'discipline__discipline_name', 'space__space_number')
+

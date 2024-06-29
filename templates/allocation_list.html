@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Allocation List</title>
+</head>
+<body>
+    <h1>Lista de Alocações</h1>
+    <ul>
+        {% for allocation in allocations %}
+            <li>{{ allocation.teacher }} - {{ allocation.discipline }} - {{ allocation.space }} - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}
+                (<a href="{% url 'allocation_detail' pk=allocation.pk %}">Detalhes</a>)
+                (<a href="{% url 'allocation_update' pk=allocation.pk %}">Editar</a>)
+                (<a href="{% url 'allocation_delete' pk=allocation.pk %}">Excluir</a>)
+            </li>
+        {% empty %}
+            <li>Nenhuma alocação encontrada.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'allocation_create' %}">Adicionar Nova Alocação</a>
+</body>
+</html>

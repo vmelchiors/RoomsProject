@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discipline List</title>
+</head>
+<body>
+    <h1>Lista de Disciplinas</h1>
+    <ul>
+        {% for discipline in disciplines %}
+            <li>{{ discipline.discipline_name }} ({{ discipline.discipline_code }}) - {% if discipline.discipline_mode %}Teorica/Pratica{% else %}Teorica{% endif %}
+                (<a href="{% url 'discipline_detail' pk=discipline.pk %}">Detalhes</a>)
+                (<a href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>)
+                (<a href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>)
+            </li>
+        {% empty %}
+            <li>Nenhuma disciplina encontrada.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'discipline_create' %}">Adicionar Nova Disciplina</a>
+</body>
+</html>

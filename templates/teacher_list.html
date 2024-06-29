@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+</head>
+<body>
+    <h1>Lista de Professores</h1>
+    <ul>
+        {% for teacher in teachers %}
+            <li>{{ teacher.first_name }} {{ teacher.last_name }} - {{ teacher.siape }}
+                (<a href="{% url 'teacher_detail' pk=teacher.pk %}">Detalhes</a>)
+                (<a href="{% url 'teacher_update' pk=teacher.pk %}">Editar</a>)
+                (<a href="{% url 'teacher_delete' pk=teacher.pk %}">Excluir</a>)
+            </li>
+        {% empty %}
+            <li>Nenhum professor encontrado.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'teacher_create' %}">Adicionar Novo Professor</a>
+</body>
+</html>

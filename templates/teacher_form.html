@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Form</title>
+</head>
+<body>
+    <h1>{% if teacher %}Editar Professor{% else %}Adicionar Novo Professor{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if teacher %}
+            <input type="hidden" name="teacher_id" value="{{ teacher.teacher_id }}">
+        {% endif %}
+        <label for="siape">SIAPE:</label>
+        <input type="text" id="siape" name="siape" value="{% if teacher %}{{ teacher.siape }}{% endif %}"><br><br>
+        <label for="first_name">Nome:</label>
+        <input type="text" id="first_name" name="first_name" value="{% if teacher %}{{ teacher.first_name }}{% endif %}"><br><br>
+        <label for="last_name">Sobrenome:</label>
+        <input type="text" id="last_name" name="last_name" value="{% if teacher %}{{ teacher.last_name }}{% endif %}"><br><br>
+        <button type="submit">{% if teacher %}Salvar{% else %}Adicionar{% endif %}</button>
+    </form>
+</body>
+</html>

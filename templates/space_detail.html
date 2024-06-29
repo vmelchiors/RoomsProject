@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Space Detail</title>
+</head>
+<body>
+    <h1>Detalhes do Espaço Físico</h1>
+    <p><strong>Andar:</strong> {{ space.space_floor }}</p>
+    <p><strong>Número:</strong> {{ space.space_number }}</p>
+    <p><strong>Bloco:</strong> {{ space.space_block }}</p>
+    <p><strong>Tipo:</strong> {% if space.space_type %}Laboratório{% else %}Sala{% endif %}</p>
+    <a href="{% url 'space_update' pk=space.pk %}">Editar</a>
+    <a href="{% url 'space_delete' pk=space.pk %}">Excluir</a>
+    <a href="{% url 'space_list' %}">Voltar para a lista de espaços físicos</a>
+</body>
+</html>

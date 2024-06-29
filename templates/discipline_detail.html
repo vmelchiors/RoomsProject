@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discipline Detail</title>
+</head>
+<body>
+    <h1>Detalhes da Disciplina</h1>
+    <p><strong>Nome:</strong> {{ discipline.discipline_name }}</p>
+    <p><strong>Código:</strong> {{ discipline.discipline_code }}</p>
+    <p><strong>Modo de Ensino:</strong> {% if discipline.discipline_mode %}Presencial{% else %}Online{% endif %}</p>
+    <a href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>
+    <a href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>
+    <a href="{% url 'discipline_list' %}">Voltar para a lista de disciplinas</a>
+</body>
+</html>
