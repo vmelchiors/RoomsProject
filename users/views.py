@@ -169,6 +169,8 @@ def allocation_create(request):
     teachers = Teacher.objects.all()
     disciplines = Discipline.objects.all()
     spaces = PhysicalSpace.objects.all()
+    dias_da_semana = Allocation.DIAS_DA_SEMANA
+    horarios = Allocation.HORARIOS
 
     if request.method == 'POST':
         teacher_id = request.POST.get('teacher')
@@ -184,7 +186,14 @@ def allocation_create(request):
         Allocation.objects.create(teacher=teacher, discipline=discipline, space=space, days_week=days_week, timetable=timetable)
         return redirect('allocation_list')
 
-    return render(request, 'allocation_form.html', {'teachers': teachers, 'disciplines': disciplines, 'spaces': spaces})
+    context = {
+        'teachers': teachers,
+        'disciplines': disciplines,
+        'spaces': spaces,
+        'dias_da_semana': dias_da_semana,
+        'horarios': horarios,
+    }
+    return render(request, 'allocation_form.html', context)
 
 def allocation_update(request, pk):
     allocation = get_object_or_404(Allocation, pk=pk)
