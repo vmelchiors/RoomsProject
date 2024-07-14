@@ -14,7 +14,7 @@
 <body>
     <header>
         <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
+        <div class="login" onclick="location.href='{% url 'login' %}'">Administrador</div>
     </header>
     <main>
         <section class="apresentacao">
@@ -24,7 +24,7 @@
                     <p class="subtitulo">Com esse sistema voce pode gerenciar melhor o ensalamento da sua instituição de ensino!</p>
                     <div class="buttonalign">
                         <button class="loginb" onclick="location.href='{% url 'login' %}'">Acessar como Administrador</button>
-                        <button class="signup" onclick="location.href='{% url 'allocation_list' %}'">Acessar como Convidado</button>
+                        <button class="signup" onclick="location.href='{% url 'rooms' %}'">Acessar como Convidado</button>
                     </div>
                 </div>
             </div>

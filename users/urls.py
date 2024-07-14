@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from core.views import download_allocations_pdf
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
@@ -26,4 +27,6 @@ urlpatterns = [
     path('allocations/<int:pk>/', views.allocation_detail, name='allocation_detail'),
     path('allocations/<int:pk>/edit/', views.allocation_update, name='allocation_update'),
     path('allocations/<int:pk>/delete/', views.allocation_delete, name='allocation_delete'),
+    path('allocations/generate_ensalamento/', views.generate_ensalamento, name='generate_ensalamento'),
+    path('allocations/download/pdf/', download_allocations_pdf, name='download_allocations_pdf'),
 ]

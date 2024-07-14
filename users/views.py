@@ -93,7 +93,8 @@ def discipline_create(request):
         discipline_name = request.POST.get('discipline_name')
         discipline_code = request.POST.get('discipline_code')
         discipline_mode = request.POST.get('discipline_mode')
-        Discipline.objects.create(discipline_name=discipline_name, discipline_code=discipline_code, discipline_mode=discipline_mode)
+        discipline_course = request.POST.get('discipline_course')
+        Discipline.objects.create(discipline_name=discipline_name, discipline_code=discipline_code, discipline_mode=discipline_mode, discipline_course=discipline_course)
         return redirect('discipline_list')
     return render(request, 'discipline_form.html')
 
@@ -231,3 +232,19 @@ def allocation_delete(request, pk):
         return redirect('allocation_list')
 
     return render(request, 'allocation_confirm_delete.html', {'allocation': allocation})
+
+from django.http import JsonResponse
+
+def generate_ensalamento(request):
+    if request.method == 'POST':
+        # Lógica para gerar o ensalamento
+        # Por exemplo, chamar uma função que realiza o ensalamento
+        # e retornar uma resposta de sucesso
+        success = True  # Substitua pela lógica real
+
+        if success:
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error'}, status=500)
+    else:
+        return JsonResponse({'status': 'error'}, status=405)

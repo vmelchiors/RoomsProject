@@ -24,6 +24,7 @@ class Discipline(models.Model):
     discipline_name = models.CharField(max_length=30)
     discipline_code = models.CharField(max_length=10)
     discipline_mode = models.BooleanField(default=False)
+    discipline_course = models.CharField(max_length=30)
 
     def __str__(self):
         return self.discipline_name

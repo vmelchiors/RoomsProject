@@ -15,6 +15,8 @@
         <input type="text" id="discipline_name" name="discipline_name" value="{% if discipline %}{{ discipline.discipline_name }}{% endif %}"><br><br>
         <label for="discipline_code">Código da Disciplina:</label>
         <input type="text" id="discipline_code" name="discipline_code" value="{% if discipline %}{{ discipline.discipline_code }}{% endif %}"><br><br>
+        <label for="discipline_course">Curso:</label>
+        <input type="text" id="discipline_course" value="{% if discipline %}{{ discipline.discipline_course }}{% endif %}"><br><br>
         <label for="discipline_mode">Modo de Ensino:</label>
         <select id="discipline_mode" name="discipline_mode">
             <option value="0" {% if discipline and not discipline.discipline_mode %}selected{% endif %}>Teorica</option>
