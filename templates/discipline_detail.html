@@ -1,16 +1,29 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/details.css' %}" />
     <title>Discipline Detail</title>
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Detalhes da Disciplina</h1>
     <p><strong>Nome:</strong> {{ discipline.discipline_name }}</p>
     <p><strong>Código:</strong> {{ discipline.discipline_code }}</p>
-    <p><strong>Modo de Ensino:</strong> {% if discipline.discipline_mode %}Presencial{% else %}Online{% endif %}</p>
-    <a href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>
-    <a href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>
-    <a href="{% url 'discipline_list' %}">Voltar para a lista de disciplinas</a>
+    <p><strong>Modo de Ensino:</strong> {% if discipline.discipline_mode %}Teórica/Prática{% else %}Teórica{% endif %}</p>
+    <div class="options">
+        <div class="optionA">
+            <a class="optionAButton" href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>
+            <a class="optionBButton" href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>
+        </div>
+        <div class="return">
+            <a class="returnButton" href="{% url 'discipline_list' %}">Voltar para a lista de disciplinas</a>
+        </div>
+    </div>
 </body>
 </html>

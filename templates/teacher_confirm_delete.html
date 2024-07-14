@@ -1,16 +1,25 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/delete.css' %}" />
     <title>Teacher Delete</title>
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Confirmação de Exclusão</h1>
     <p>Você tem certeza que deseja excluir o professor "{{ teacher.first_name }} {{ teacher.last_name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Confirmar Exclusão</button>
+        <button class="button" type="submit">Confirmar Exclusão</button>
     </form>
-    <a href="{% url 'teacher_list' %}">Cancelar e voltar para a lista de professores</a>
+    <div class="alignA">
+        <a class="return" href="{% url 'teacher_list' %}">Cancelar e voltar para a lista de professores</a>
+    </div>
 </body>
 </html>

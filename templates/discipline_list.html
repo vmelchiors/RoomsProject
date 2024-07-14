@@ -1,22 +1,34 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Discipline List</title>
+    <link rel="stylesheet" href="{% static 'css/list.css' %}" />
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Lista de Disciplinas</h1>
-    <ul>
-        {% for discipline in disciplines %}
-            <li>{{ discipline.discipline_name }} ({{ discipline.discipline_code }}) - {% if discipline.discipline_mode %}Teorica/Pratica{% else %}Teorica{% endif %}
-                (<a href="{% url 'discipline_detail' pk=discipline.pk %}">Detalhes</a>)
-                (<a href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>)
-                (<a href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>)
-            </li>
-        {% empty %}
-            <li>Nenhuma disciplina encontrada.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'discipline_create' %}">Adicionar Nova Disciplina</a>
+    <div class="contentList">
+        <ul>
+            {% for discipline in disciplines %}
+                <li>{{ discipline.discipline_name }} ({{ discipline.discipline_code }}) - {% if discipline.discipline_mode %}Teorica/Pratica{% else %}Teorica{% endif %}
+                    (<a class="options" href="{% url 'discipline_detail' pk=discipline.pk %}">Detalhes</a>)
+                    (<a class="options" href="{% url 'discipline_update' pk=discipline.pk %}">Editar</a>)
+                    (<a class="optionsE" href="{% url 'discipline_delete' pk=discipline.pk %}">Excluir</a>)
+                </li>
+            <br>
+            {% empty %}
+                <li>Nenhuma disciplina encontrada.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="alignA">
+        <a class="return" href="{% url 'discipline_create' %}">Adicionar Nova Disciplina</a>
+    </div>
 </body>
 </html>

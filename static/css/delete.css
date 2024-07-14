@@ -39,73 +39,47 @@ header {
     background-color: #c7a50d;
 }
 
-.door {
-    margin-right: 50px;
-    margin-top: 80px;
-    height: 30%;
-    width: 30%;
-    max-width: 300px;
+h1{
+    text-align: center;
 }
 
-.door img {
-    width: 100%;
-    height: auto;
+p{
+    color: red;
+    text-align: center;
 }
 
-.logo {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 700px;
+.alignA{
+    margin-top: 20px;
+    text-align: center;
 }
 
-nav ul {
-    list-style: none;
+form{
     display: flex;
-    gap: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-}
-
-.apresentacao {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.opcoes{
-    margin-left: 300px;
-    margin-top: 80px;
-    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.door{
-    margin-right: 300px;
+.button {
+    padding: 10px 30px;
+    font-size: 16px;
+    margin-left: 50px;
+    color: #fff;
+    background-color: #d2210d;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.buttonalign{
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
+.button:hover{
+    padding: 8.5px 28.5px;
+    font-size: 16px;
+    border: 2px solid #d2210d;
+    color: #d2210d;
+    background-color: transparent;
 }
 
-.slogan{
-    font-size: 43px;
-    margin: 0px;
-    font-weight: bold;
-}
-
-.subtitulo{
-    margin: 15px 0px;
-    font-size: 20px;
-    color: #4b4b4b;
-}
-
-.loginb {
+.return {
     padding: 10px 30px;
     font-size: 16px;
     color: #fff;
@@ -114,32 +88,15 @@ nav a {
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
 }
 
-.loginb:hover{
-    padding: 10px 28.5px;
+.return:hover{
+    padding: 8.5px 28.5px;
     font-size: 16px;
     border: 2px solid #c7a50d;
-    color: #9e8202;
+    color: #a98c0e;
     background-color: transparent;
+    text-decoration: none;
 }
 
-.signup {
-    margin-right: 50px;
-    padding: 10px 30px;
-    font-size: 16px;
-    color: #9e8202;
-    background-color: transparent;
-    border: 2px solid #c7a50d;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.signup:hover{
-    padding: 10px 30px;
-    font-size: 16px;
-    border-radius: 20px;
-    color: #fff;
-    background-color: #c7a50d;
-}

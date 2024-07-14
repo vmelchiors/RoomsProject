@@ -39,74 +39,48 @@ header {
     background-color: #c7a50d;
 }
 
-.door {
-    margin-right: 50px;
-    margin-top: 80px;
-    height: 30%;
-    width: 30%;
-    max-width: 300px;
+h1{
+    text-align: center;
 }
 
-.door img {
-    width: 100%;
-    height: auto;
+p{
+    text-align: center;
 }
 
-.logo {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 700px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-}
-
-.apresentacao {
+.options{
     margin-top: 50px;
     display: flex;
-    justify-content: space-between;
-}
-
-.opcoes{
-    margin-left: 300px;
-    margin-top: 80px;
-    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.door{
-    margin-right: 300px;
+.optionA{
+    margin-right: 50px;
 }
 
-.buttonalign{
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
+.returnButton {
+    text-decoration: none;
+    padding: 9px 25px;
+    font-size: 16px;
+    color: #9e8202;
+    border: 2px solid #c7a50d;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.slogan{
-    font-size: 43px;
-    margin: 0px;
-    font-weight: bold;
+.returnButton:hover{
+    padding: 9px 25px;
+    font-size: 16px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #c7a50d;
 }
 
-.subtitulo{
-    margin: 15px 0px;
-    font-size: 20px;
-    color: #4b4b4b;
-}
-
-.loginb {
-    padding: 10px 30px;
+.optionAButton {
+    margin-right: 5px;
+    text-decoration: none;
+    padding: 10px 18px;
     font-size: 16px;
     color: #fff;
     background-color: #c7a50d;
@@ -116,30 +90,31 @@ nav a {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.loginb:hover{
-    padding: 10px 28.5px;
+.optionAButton:hover{
+    padding: 8.4px 16.3px;
     font-size: 16px;
     border: 2px solid #c7a50d;
-    color: #9e8202;
+    color: #a98c0e;
     background-color: transparent;
 }
 
-.signup {
-    margin-right: 50px;
-    padding: 10px 30px;
+.optionBButton {
+    margin-right: 5px;
+    text-decoration: none;
+    padding: 10px 18px;
     font-size: 16px;
-    color: #9e8202;
-    background-color: transparent;
-    border: 2px solid #c7a50d;
+    color: #fff;
+    background-color: #d2210d;
+    border: none;
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.signup:hover{
-    padding: 10px 30px;
+.optionBButton:hover{
+    padding: 8.4px 16.3px;
     font-size: 16px;
-    border-radius: 20px;
-    color: #fff;
-    background-color: #c7a50d;
+    border: 2px solid #d2210d;
+    color: #d2210d;
+    background-color: transparent;
 }

@@ -2,74 +2,53 @@ body {
     margin: 0;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 200px;
     font-style: normal;
     background-color: #e9e9e9;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 20px 300px;
     background-color: #e9e9e9;
 }
 
-.nome {
-    text-align: center;
-}
-
-.tabelaens {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .logo {
     font-size: 18px;
     font-weight: bold;
+    margin-right: 700px;
 }
 
 .login {
-    font-size: 17px;
+    margin-left: 40px;
+    font-size: 15px;
     cursor: pointer;
     color: #9e8202;
-    padding: 6px 30px;
+    padding: 6px 20px;
     border: 2px solid #c7a50d;
     border-radius: 20px;
     background-color: transparent;
     transition: background-color 0.3s, color 0.3s;
 }
 .login:hover{
-    padding: 6px 30px;
-    font-size: 17px;
+    padding: 6px 20px;
+    font-size: 15px;
     border-radius: 20px;
     color: #fff;
     background-color: #c7a50d;
 }
 
-.downefilt1 {
-    padding: 10px 30px;
-    font-size: 16px;
-    margin-right: 500px;
-    color: #fff;
-    background-color: #c7a50d;
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
+h1{
+    text-align: center;
 }
 
-.downefilt1:hover{
-    padding: 8px 28.5px;
-    font-size: 16px;
-    border: 2px solid #c7a50d;
-    color: #9e8202;
-    background-color: transparent;
+.alignA{
+    margin-top: 20px;
+    text-align: center;
 }
 
-.downefilt2 {
+.return {
     padding: 10px 30px;
     font-size: 16px;
     color: #fff;
@@ -78,61 +57,61 @@ header {
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
 }
 
-.downefilt2:hover{
-    padding: 8px 28.5px;
+.return:hover{
+    padding: 8.5px 28.5px;
     font-size: 16px;
     border: 2px solid #c7a50d;
-    color: #9e8202;
+    color: #a98c0e;
     background-color: transparent;
+    text-decoration: none;
 }
 
-.tabelastyle {
-    border-collapse: collapse;
-    background-color: #fff;
-}
-
-.tabelastyle thead tr {
+.options {
+    padding: 4px 10px;
+    font-size: 16px;
+    color: #fff;
     background-color: #c7a50d;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
 }
 
-.tabelastyle th,
-.tabelastyle td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
+.options:hover{
+    padding: 2.4px 8.5px;
+    font-size: 16px;
+    border: 2px solid #c7a50d;
+    color: #a98c0e;
+    background-color: transparent;
+    text-decoration: none;
 }
 
-.tabelastyle tbody tr {
-    border-bottom: 1px solid #dddddd;
+.optionsE {
+    padding: 4px 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #d2210d;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
 }
 
-.tabelastyle tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.optionsE:hover{
+    padding: 2.4px 8.5px;
+    font-size: 16px;
+    border: 2px solid #d2210d;
+    color: #d2210d;
+    background-color: transparent;
+    text-decoration: none;
 }
 
-.tabelastyle tbody tr:last-of-type {
-    border-bottom: 2px solid #c7a50d;
-}
-
-.tabelastyle tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-.tabelastyle th {
-    padding: 10px;
-}
-
-.tabelastyle td {
-    padding: 10px;
-}
-
-.buttonfiltros {
-    margin-bottom: 20px;
+.contentList{
     display: flex;
     justify-content: center;
-    align-items: center;
 }

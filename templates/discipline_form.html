@@ -1,37 +1,51 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
     <title>Discipline Form</title>
 </head>
 <body>
-<h1>{% if discipline %}Editar Disciplina{% else %}Adicionar Nova Disciplina{% endif %}</h1>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
+    <h1>{% if discipline %}Editar Disciplina{% else %}Adicionar Nova Disciplina{% endif %}</h1>
 
-{% if error %}
-    <p style="color: red;">{{ error }}</p>
-{% endif %}
+    <div class="errormid">
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
 
 <form method="post">
-    {% csrf_token %}
-    {% if discipline %}
-        <input type="hidden" name="discipline_id" value="{{ discipline.discipline_id }}">
-    {% endif %}
-    <label for="discipline_name">Nome da Disciplina:</label>
-    <input type="text" id="discipline_name" name="discipline_name" value="{% if discipline %}{{ discipline.discipline_name }}{% endif %}"><br><br>
+    <div class="structureForm">
+        <div class="formInformation">
+            {% csrf_token %}
+            {% if discipline %}
+                <input type="hidden" name="discipline_id" value="{{ discipline.discipline_id }}">
+            {% endif %}
+            <label for="discipline_name">Nome da Disciplina:</label>
+            <input type="text" class="textclass" id="discipline_name" name="discipline_name" value="{% if discipline %}{{ discipline.discipline_name }}{% endif %}"><br><br>
 
-    <label for="discipline_code">Código da Disciplina:</label>
-    <input type="text" id="discipline_code" name="discipline_code" value="{% if discipline %}{{ discipline.discipline_code }}{% endif %}"><br><br>
+            <label for="discipline_code">Código da Disciplina:</label>
+            <input type="text" class="textclass" id="discipline_code" name="discipline_code" value="{% if discipline %}{{ discipline.discipline_code }}{% endif %}"><br><br>
 
-    <label for="discipline_course">Curso:</label>
-    <input type="text" id="discipline_course" name="discipline_course" value="{% if discipline %}{{ discipline.discipline_course }}{% endif %}"><br><br>
+            <label for="discipline_course">Curso:</label>
+            <input type="text" class="textclass" id="discipline_course" name="discipline_course" value="{% if discipline %}{{ discipline.discipline_course }}{% endif %}"><br><br>
 
-    <label for="discipline_mode">Modo de Ensino:</label>
-    <select id="discipline_mode" name="discipline_mode">
-        <option value="0" {% if discipline and not discipline.discipline_mode %}selected{% endif %}>Teórica</option>
-        <option value="1" {% if discipline and discipline.discipline_mode %}selected{% endif %}>Teórica/Prática</option>
-    </select><br><br>
-
-    <button type="submit">{% if discipline %}Salvar{% else %}Adicionar{% endif %}</button>
+            <label for="discipline_mode">Modo de Ensino:</label>
+            <select id="discipline_mode" name="discipline_mode">
+                <option value="0" {% if discipline and not discipline.discipline_mode %}selected{% endif %}>Teórica</option>
+                <option value="1" {% if discipline and discipline.discipline_mode %}selected{% endif %}>Teórica/Prática</option>
+            </select><br><br>
+        </div>
+        <div class="divbutton">
+            <button class="button" type="submit">{% if discipline %}Salvar{% else %}Adicionar{% endif %}</button>
+        </div>
+    </div>
 </form>
 </body>
 </html>

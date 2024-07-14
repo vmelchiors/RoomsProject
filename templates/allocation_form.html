@@ -1,54 +1,67 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
     <title>Allocation Form</title>
 </head>
 <body>
-<h1>{% if allocation %}Editar Alocação{% else %}Adicionar Nova Alocação{% endif %}</h1>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
+    <h1>{% if allocation %}Editar Alocação{% else %}Adicionar Nova Alocação{% endif %}</h1>
 
-{% if error %}
-    <p style="color: red;">{{ error }}</p>
-{% endif %}
+    <div class="errormid">
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    {% if allocation %}
-        <input type="hidden" name="allocation_id" value="{{ allocation.allocation_id }}">
-    {% endif %}
-    <label for="teacher">Professor:</label>
-    <select id="teacher" name="teacher">
-        {% for teacher in teachers %}
-            <option value="{{ teacher.pk }}" {% if allocation and allocation.teacher.pk == teacher.pk %}selected{% endif %}>{{ teacher }}</option>
-        {% endfor %}
-    </select><br><br>
-    <label for="discipline">Disciplina:</label>
-    <select id="discipline" name="discipline">
-        {% for discipline in disciplines %}
-            <option value="{{ discipline.pk }}" {% if allocation and allocation.discipline.pk == discipline.pk %}selected{% endif %}>{{ discipline }}</option>
-        {% endfor %}
-    </select><br><br>
-    {% if not allocation %}
-        <label for="space">Espaço Físico:</label>
-        <select id="space" name="space">
-            {% for space in spaces %}
-                <option value="{{ space.pk }}">{{ space }}</option>
-            {% endfor %}
-        </select><br><br>
-    {% endif %}
-    <label for="days_week">Dia da Semana:</label>
-    <select id="days_week" name="days_week">
-        {% for day_code, day_name in dias_da_semana %}
-            <option value="{{ day_code }}" {% if allocation and allocation.days_week == day_code %}selected{% endif %}>{{ day_name }}</option>
-        {% endfor %}
-    </select><br><br>
-    <label for="timetable">Horário:</label>
-    <select id="timetable" name="timetable">
-        {% for time_code, time_name in horarios %}
-            <option value="{{ time_code }}" {% if allocation and allocation.timetable == time_code %}selected{% endif %}>{{ time_name }}</option>
-        {% endfor %}
-    </select><br><br>
-    <button type="submit">{% if allocation %}Salvar{% else %}Adicionar{% endif %}</button>
-</form>
+    <form method="post">
+        <div class="structureForm">
+            <div class="formInformation">
+                {% csrf_token %}
+                {% if allocation %}
+                    <input type="hidden" name="allocation_id" value="{{ allocation.allocation_id }}">
+                {% endif %}
+                <label for="teacher">Professor:</label>
+                <select id="teacher" name="teacher">
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.pk }}" {% if allocation and allocation.teacher.pk == teacher.pk %}selected{% endif %}>{{ teacher }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label for="discipline">Disciplina:</label>
+                <select id="discipline" name="discipline">
+                    {% for discipline in disciplines %}
+                        <option value="{{ discipline.pk }}" {% if allocation and allocation.discipline.pk == discipline.pk %}selected{% endif %}>{{ discipline }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label for="space">Espaço:</label>
+                <select id="space" name="space">
+                    {% for space in spaces %}
+                        <option value="{{ space.pk }}" {% if allocation and allocation.space.pk == space.pk %}selected{% endif %}>{{ space }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label for="days_week">Dia da Semana:</label>
+                <select id="days_week" name="days_week">
+                    {% for day_code, day_name in allocation.DIAS_DA_SEMANA %}
+                        <option value="{{ day_code }}" {% if allocation and allocation.days_week == day_code %}selected{% endif %}>{{ day_name }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label for="timetable">Horário:</label>
+                <select id="timetable" name="timetable">
+                    {% for time_code, time_name in allocation.HORARIOS %}
+                        <option value="{{ time_code }}" {% if allocation and allocation.timetable == time_code %}selected{% endif %}>{{ time_name }}</option>
+                    {% endfor %}
+                </select><br><br>
+            </div>
+            <div class="divbutton">
+                <button class="button" type="submit">{% if allocation %}Salvar{% else %}Adicionar{% endif %}</button>
+            </div>
+        </div>
+    </form>
 </body>
 </html>

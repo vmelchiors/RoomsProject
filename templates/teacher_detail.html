@@ -1,15 +1,28 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/details.css' %}" />
     <title>Teacher Detail</title>
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Detalhes do Professor</h1>
     <p><strong>Nome:</strong> {{ teacher.first_name }} {{ teacher.last_name }}</p>
     <p><strong>SIAPE:</strong> {{ teacher.siape }}</p>
-    <a href="{% url 'teacher_update' pk=teacher.pk %}">Editar</a>
-    <a href="{% url 'teacher_delete' pk=teacher.pk %}">Excluir</a>
-    <a href="{% url 'teacher_list' %}">Voltar para a lista de professores</a>
+    <div class="options">
+        <div class="optionA">
+            <a class="optionAButton" href="{% url 'teacher_update' pk=teacher.pk %}">Editar</a>
+            <a class="optionBButton" href="{% url 'teacher_delete' pk=teacher.pk %}">Excluir</a>
+        </div>
+        <div class="return">
+            <a class="returnButton" href="{% url 'teacher_list' %}">Voltar para a lista de professores</a>
+        </div>
+    </div>
 </body>
 </html>
