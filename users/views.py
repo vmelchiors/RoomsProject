@@ -103,15 +103,25 @@ def discipline_list(request):
 def discipline_detail(request, pk):
     discipline = get_object_or_404(Discipline, pk=pk)
     return render(request, 'discipline_detail.html', {'discipline': discipline})
-
 def discipline_create(request):
     if request.method == 'POST':
         discipline_name = request.POST.get('discipline_name')
         discipline_code = request.POST.get('discipline_code')
         discipline_mode = request.POST.get('discipline_mode')
         discipline_course = request.POST.get('discipline_course')
-        Discipline.objects.create(discipline_name=discipline_name, discipline_code=discipline_code, discipline_mode=discipline_mode, discipline_course=discipline_course)
-        return redirect('discipline_list')
+
+        if discipline_name and discipline_code and discipline_course:
+            Discipline.objects.create(
+                discipline_name=discipline_name,
+                discipline_code=discipline_code,
+                discipline_mode=discipline_mode,
+                discipline_course=discipline_course
+            )
+            return redirect('discipline_list')
+        else:
+            error_message = "Por favor, preencha todos os campos obrigatórios."
+            return render(request, 'discipline_form.html', {'error': error_message})
+
     return render(request, 'discipline_form.html')
 
 def discipline_update(request, pk):
@@ -120,13 +130,18 @@ def discipline_update(request, pk):
         discipline_name = request.POST.get('discipline_name')
         discipline_code = request.POST.get('discipline_code')
         discipline_mode = request.POST.get('discipline_mode')
-        discipline.discipline_name = discipline_name
-        discipline.discipline_code = discipline_code
-        discipline.discipline_mode = discipline_mode
-        discipline.save()
-        return redirect('discipline_list')
-    return render(request, 'discipline_form.html', {'discipline': discipline})
 
+        if discipline_name and discipline_code:
+            discipline.discipline_name = discipline_name
+            discipline.discipline_code = discipline_code
+            discipline.discipline_mode = discipline_mode
+            discipline.save()
+            return redirect('discipline_list')
+        else:
+            error_message = "Por favor, preencha todos os campos obrigatórios."
+            return render(request, 'discipline_form.html', {'discipline': discipline, 'error': error_message})
+
+    return render(request, 'discipline_form.html', {'discipline': discipline})
 def discipline_delete(request, pk):
     discipline = get_object_or_404(Discipline, pk=pk)
     if request.method == 'POST':
