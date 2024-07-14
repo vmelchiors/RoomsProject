@@ -3,19 +3,25 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from core.models import Teacher, Discipline, PhysicalSpace, Allocation
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('dashboard')
-        else:
-            return render(request, 'login.html', {'error': 'Usuário ou senha inválidos'})
-    return render(request, 'login.html')
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+        # Se o login falhar
+        messages.error(request, 'Usuário ou senha inválidos')
+    else:
+        form = AuthenticationForm()
 
+    return render(request, 'login.html', {'form': form})
 def logout_view(request):
     logout(request)
     return redirect('login')
