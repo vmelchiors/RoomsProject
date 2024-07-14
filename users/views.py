@@ -62,8 +62,14 @@ def teacher_create(request):
         siape = request.POST.get('siape')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        Teacher.objects.create(siape=siape, first_name=first_name, last_name=last_name)
-        return redirect('teacher_list')
+
+        if siape and first_name and last_name:
+            Teacher.objects.create(siape=siape, first_name=first_name, last_name=last_name)
+            return redirect('teacher_list')
+        else:
+            error_message = "Por favor, preencha todos os campos obrigatórios."
+            return render(request, 'teacher_form.html', {'error': error_message})
+
     return render(request, 'teacher_form.html')
 
 def teacher_update(request, pk):
@@ -72,13 +78,17 @@ def teacher_update(request, pk):
         siape = request.POST.get('siape')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        teacher.siape = siape
-        teacher.first_name = first_name
-        teacher.last_name = last_name
-        teacher.save()
-        return redirect('teacher_list')
-    return render(request, 'teacher_form.html', {'teacher': teacher})
+        if siape and first_name and last_name:
+            teacher.siape = siape
+            teacher.first_name = first_name
+            teacher.last_name = last_name
+            teacher.save()
+            return redirect('teacher_list')
+        else:
+            error_message = "Por favor, preencha todos os campos obrigatórios."
+            return render(request, 'teacher_form.html', {'teacher': teacher, 'error': error_message})
 
+    return render(request, 'teacher_form.html', {'teacher': teacher})
 def teacher_delete(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
