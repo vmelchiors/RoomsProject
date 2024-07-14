@@ -63,7 +63,7 @@ class Allocation(models.Model):
     allocation_id = models.AutoField(primary_key=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
-    space = models.ForeignKey(PhysicalSpace, on_delete=models.CASCADE)
+    space = models.ForeignKey(PhysicalSpace, on_delete=models.SET_NULL, null=True, blank=True)
     days_week = models.CharField(max_length=3, choices=DIAS_DA_SEMANA, unique=True)
     timetable = models.CharField(max_length=5, choices=HORARIOS, unique=True)
 

@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>{% if allocation %}Editar Alocação{% else %}Adicionar Nova Alocação{% endif %}</h1>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
 <form method="post">
     {% csrf_token %}
     {% if allocation %}
@@ -23,12 +28,14 @@
             <option value="{{ discipline.pk }}" {% if allocation and allocation.discipline.pk == discipline.pk %}selected{% endif %}>{{ discipline }}</option>
         {% endfor %}
     </select><br><br>
-    <label for="space">Espaço:</label>
-    <select id="space" name="space">
-        {% for space in spaces %}
-            <option value="{{ space.pk }}" {% if allocation and allocation.space.pk == space.pk %}selected{% endif %}>{{ space }}</option>
-        {% endfor %}
-    </select><br><br>
+    {% if not allocation %}
+        <label for="space">Espaço Físico:</label>
+        <select id="space" name="space">
+            {% for space in spaces %}
+                <option value="{{ space.pk }}">{{ space }}</option>
+            {% endfor %}
+        </select><br><br>
+    {% endif %}
     <label for="days_week">Dia da Semana:</label>
     <select id="days_week" name="days_week">
         {% for day_code, day_name in dias_da_semana %}

@@ -5,24 +5,33 @@
     <title>Space Form</title>
 </head>
 <body>
-    <h1>{% if space %}Editar Espaço Físico{% else %}Adicionar Novo Espaço Físico{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {% if space %}
-            <input type="hidden" name="space_id" value="{{ space.space_id }}">
-        {% endif %}
-        <label for="space_floor">Andar:</label>
-        <input type="number" id="space_floor" name="space_floor" value="{% if space %}{{ space.space_floor }}{% endif %}"><br><br>
-        <label for="space_number">Número:</label>
-        <input type="number" id="space_number" name="space_number" value="{% if space %}{{ space.space_number }}{% endif %}"><br><br>
-        <label for="space_block">Bloco:</label>
-        <input type="text" id="space_block" name="space_block" maxlength="1" value="{% if space %}{{ space.space_block }}{% endif %}"><br><br>
-        <label for="space_type">Tipo de Espaço:</label>
-        <select id="space_type" name="space_type">
-            <option value="0" {% if space and not space.space_type %}selected{% endif %}>Sala</option>
-            <option value="1" {% if space and space.space_type %}selected{% endif %}>Laboratório</option>
-        </select><br><br>
-        <button type="submit">{% if space %}Salvar{% else %}Adicionar{% endif %}</button>
-    </form>
+<h1>{% if space %}Editar Espaço Físico{% else %}Adicionar Novo Espaço Físico{% endif %}</h1>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% if space %}
+        <input type="hidden" name="space_id" value="{{ space.space_id }}">
+    {% endif %}
+    <label for="space_floor">Andar:</label>
+    <input type="number" id="space_floor" name="space_floor" value="{% if space %}{{ space.space_floor }}{% endif %}"><br><br>
+
+    <label for="space_number">Número:</label>
+    <input type="number" id="space_number" name="space_number" value="{% if space %}{{ space.space_number }}{% endif %}"><br><br>
+
+    <label for="space_block">Bloco:</label>
+    <input type="text" id="space_block" name="space_block" maxlength="1" value="{% if space %}{{ space.space_block }}{% endif %}"><br><br>
+
+    <label for="space_type">Tipo de Espaço:</label>
+    <select id="space_type" name="space_type">
+        <option value="0" {% if space and not space.space_type %}selected{% endif %}>Sala</option>
+        <option value="1" {% if space and space.space_type %}selected{% endif %}>Laboratório</option>
+    </select><br><br>
+
+    <button type="submit">{% if space %}Salvar{% else %}Adicionar{% endif %}</button>
+</form>
 </body>
 </html>

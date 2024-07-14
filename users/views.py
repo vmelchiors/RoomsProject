@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from core.models import Teacher, Discipline, PhysicalSpace, Allocation
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.db import IntegrityError
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -163,25 +165,40 @@ def space_create(request):
         space_number = request.POST.get('space_number')
         space_block = request.POST.get('space_block')
         space_type = request.POST.get('space_type')
-        PhysicalSpace.objects.create(space_floor=space_floor, space_number=space_number, space_block=space_block, space_type=space_type)
-        return redirect('space_list')
+
+        try:
+            PhysicalSpace.objects.create(
+                space_floor=space_floor,
+                space_number=space_number,
+                space_block=space_block,
+                space_type=space_type
+            )
+            return redirect('space_list')
+        except Exception as e:
+            return render(request, 'space_form.html', {'error': str(e)})
+
     return render(request, 'space_form.html')
 
 def space_update(request, pk):
     space = get_object_or_404(PhysicalSpace, pk=pk)
+
     if request.method == 'POST':
         space_floor = request.POST.get('space_floor')
         space_number = request.POST.get('space_number')
         space_block = request.POST.get('space_block')
         space_type = request.POST.get('space_type')
-        space.space_floor = space_floor
-        space.space_number = space_number
-        space.space_block = space_block
-        space.space_type = space_type
-        space.save()
-        return redirect('space_list')
-    return render(request, 'space_form.html', {'space': space})
 
+        try:
+            space.space_floor = space_floor
+            space.space_number = space_number
+            space.space_block = space_block
+            space.space_type = space_type
+            space.save()
+            return redirect('space_list')
+        except Exception as e:
+            return render(request, 'space_form.html', {'space': space, 'error': str(e)})
+
+    return render(request, 'space_form.html', {'space': space})
 def space_delete(request, pk):
     space = get_object_or_404(PhysicalSpace, pk=pk)
     if request.method == 'POST':
@@ -200,23 +217,36 @@ def allocation_detail(request, pk):
 def allocation_create(request):
     teachers = Teacher.objects.all()
     disciplines = Discipline.objects.all()
-    spaces = PhysicalSpace.objects.all()
     dias_da_semana = Allocation.DIAS_DA_SEMANA
     horarios = Allocation.HORARIOS
+    spaces = PhysicalSpace.objects.all()
 
     if request.method == 'POST':
         teacher_id = request.POST.get('teacher')
         discipline_id = request.POST.get('discipline')
-        space_id = request.POST.get('space')
         days_week = request.POST.get('days_week')
         timetable = request.POST.get('timetable')
+        space_id = request.POST.get('space')
 
-        teacher = get_object_or_404(Teacher, pk=teacher_id)
-        discipline = get_object_or_404(Discipline, pk=discipline_id)
-        space = get_object_or_404(PhysicalSpace, pk=space_id)
+        try:
+            teacher = get_object_or_404(Teacher, pk=teacher_id)
+            discipline = get_object_or_404(Discipline, pk=discipline_id)
+            space = get_object_or_404(PhysicalSpace, pk=space_id) if space_id else None
 
-        Allocation.objects.create(teacher=teacher, discipline=discipline, space=space, days_week=days_week, timetable=timetable)
-        return redirect('allocation_list')
+            Allocation.objects.create(teacher=teacher, discipline=discipline, space=space, days_week=days_week, timetable=timetable)
+            return redirect('allocation_list')
+
+        except IntegrityError:
+            error_message = 'Já existe uma alocação com estes dados.'
+            context = {
+                'teachers': teachers,
+                'disciplines': disciplines,
+                'spaces': spaces,
+                'dias_da_semana': dias_da_semana,
+                'horarios': horarios,
+                'error': error_message,
+            }
+            return render(request, 'allocation_form.html', context)
 
     context = {
         'teachers': teachers,
@@ -232,6 +262,8 @@ def allocation_update(request, pk):
     teachers = Teacher.objects.all()
     disciplines = Discipline.objects.all()
     spaces = PhysicalSpace.objects.all()
+    dias_da_semana = Allocation.DIAS_DA_SEMANA
+    horarios = Allocation.HORARIOS
 
     if request.method == 'POST':
         teacher_id = request.POST.get('teacher')
@@ -253,7 +285,15 @@ def allocation_update(request, pk):
 
         return redirect('allocation_list')
 
-    return render(request, 'allocation_form.html', {'allocation': allocation, 'teachers': teachers, 'disciplines': disciplines, 'spaces': spaces})
+    context = {
+        'allocation': allocation,
+        'teachers': teachers,
+        'disciplines': disciplines,
+        'spaces': spaces,
+        'dias_da_semana': dias_da_semana,
+        'horarios': horarios,
+    }
+    return render(request, 'allocation_form.html', context)
 
 def allocation_delete(request, pk):
     allocation = get_object_or_404(Allocation, pk=pk)
