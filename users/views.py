@@ -35,17 +35,17 @@ def register_view(request):
 
         if password == password_confirm:
             if User.objects.filter(username=username).exists():
-                return render(request, 'register.html', {'error': 'Nome de usuário já existe'})
+                messages.error(request, 'Nome de usuário já existe')
             elif User.objects.filter(email=email).exists():
-                return render(request, 'register.html', {'error': 'Email já está registrado'})
+                messages.error(request, 'Email já está registrado')
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
                 return redirect('login')
         else:
-            return render(request, 'register.html', {'error': 'As senhas não coincidem'})
-    return render(request, 'register.html')
+            messages.error(request, 'As senhas não coincidem')
 
+    return render(request, 'register.html')
 def dashboard_view(request):
     return render(request, 'dashboard.html')
 
