@@ -228,16 +228,21 @@ def allocation_create(request):
         timetable = request.POST.get('timetable')
         space_id = request.POST.get('space')
 
+        teacher = get_object_or_404(Teacher, pk=teacher_id)
+        discipline = get_object_or_404(Discipline, pk=discipline_id)
+        space = get_object_or_404(PhysicalSpace, pk=space_id) if space_id else None
+
         try:
-            teacher = get_object_or_404(Teacher, pk=teacher_id)
-            discipline = get_object_or_404(Discipline, pk=discipline_id)
-            space = get_object_or_404(PhysicalSpace, pk=space_id) if space_id else None
-
-            Allocation.objects.create(teacher=teacher, discipline=discipline, space=space, days_week=days_week, timetable=timetable)
+            Allocation.objects.create(
+                teacher=teacher,
+                discipline=discipline,
+                space=space,
+                days_week=days_week,
+                timetable=timetable
+            )
             return redirect('allocation_list')
-
         except IntegrityError:
-            error_message = 'Já existe uma alocação com estes dados.'
+            error_message = 'Já existe uma alocação com este horário.'
             context = {
                 'teachers': teachers,
                 'disciplines': disciplines,
