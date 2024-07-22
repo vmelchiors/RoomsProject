@@ -4,53 +4,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   <link rel="stylesheet" href="{% static 'css/list.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/list.css' %}" />
     <title>Allocation List</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <header>
-        <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
-    </header>
-    <h1>Lista de Alocações</h1>
-    <div class="contentList">
-        <ul>
-            {% for allocation in allocations %}
-                <li class="optionList">{{ allocation.teacher }} - {{ allocation.discipline }} - {{ allocation.space }} - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}
-                    (<a class="options" href="{% url 'allocation_detail' pk=allocation.pk %}">Detalhes</a>)
-                    (<a class="options" href="{% url 'allocation_update' pk=allocation.pk %}">Editar</a>)
-                    (<a class="optionsE" href="{% url 'allocation_delete' pk=allocation.pk %}">Excluir</a>)
-                </li>
+<header>
+    <div class="logo">Rooms</div>
+    <div class="login">Administrador</div>
+</header>
+<h1>Lista de Alocações</h1>
+
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Buscar...">
+</div>
+
+<div class="contentList">
+    <ul id="allocation-list">
+        {% for allocation in allocations %}
+            <li class="optionList">{{ allocation.teacher }} - {{ allocation.discipline }} - {{ allocation.space }} - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}
+                (<a class="options" href="{% url 'allocation_detail' pk=allocation.pk %}">Detalhes</a>)
+                (<a class="options" href="{% url 'allocation_update' pk=allocation.pk %}">Editar</a>)
+                (<a class="optionsE" href="{% url 'allocation_delete' pk=allocation.pk %}">Excluir</a>)
+            </li>
             <br>
-            {% empty %}
-                <li>Nenhuma alocação encontrada.</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="alignA">
-        <a class="return" href="{% url 'allocation_create' %}">Adicionar Nova Alocação</a>
-        <br><br>
-        <button class="return" id="generate-ensalamento-button">Gerar Ensalamento</button>
-    </div>
-    <script>
-        $(document).ready(function(){
-            $('#generate-ensalamento-button').click(function(){
-                $.ajax({
-                    url: '{% url "generate_ensalamento" %}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        alert('Ensalamento gerado com sucesso!');
-                    },
-                    error: function(response) {
-                        alert('Erro ao gerar ensalamento.');
-                    }
-                });
+        {% empty %}
+            <li>Nenhuma alocação encontrada.</li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="alignA">
+    <a class="return" href="{% url 'allocation_create' %}">Adicionar Nova Alocação</a>
+    <br><br>
+    <button class="return" id="generate-ensalamento-button">Gerar Ensalamento</button>
+</div>
+<script>
+    $(document).ready(function(){
+        // Função de busca
+        $('#search-input').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('#allocation-list .optionList').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
         });
-    </script>
+
+        $('#generate-ensalamento-button').click(function(){
+            $.ajax({
+                url: '{% url "generate_ensalamento" %}',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('Ensalamento gerado com sucesso!');
+                },
+                error: function(response) {
+                    alert('Erro ao gerar ensalamento.');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

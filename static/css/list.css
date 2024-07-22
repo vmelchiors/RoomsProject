@@ -115,3 +115,22 @@ h1{
     display: flex;
     justify-content: center;
 }
+.search-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#search-input {
+    padding: 10px;
+    width: 50%;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+#search-input:focus {
+    border-color: #c7a50d;
+    outline: none;
+}
