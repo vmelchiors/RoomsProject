@@ -40,7 +40,6 @@
 </div>
 <script>
     $(document).ready(function(){
-        // Função de busca
         $('#search-input').on('keyup', function() {
             var value = $(this).val().toLowerCase();
             $('#allocation-list .optionList').filter(function() {
@@ -57,6 +56,7 @@
                 },
                 success: function(response) {
                     alert('Ensalamento gerado com sucesso!');
+                    location.reload();
                 },
                 error: function(response) {
                     alert('Erro ao gerar ensalamento.');
