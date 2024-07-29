@@ -310,20 +310,48 @@ def allocation_delete(request, pk):
     return render(request, 'allocation_confirm_delete.html', {'allocation': allocation})
 
 from django.http import JsonResponse
-
-import pickle
-from django.http import JsonResponse
 from core.models import Teacher, Discipline, PhysicalSpace, Allocation
 from sklearn.tree import DecisionTreeClassifier
+import pickle
+from pathlib import Path
+import numpy as np
 
-with open('./ensalamento.pkl', 'rb') as f:
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+file_path = BASE_DIR / 'Predict' / 'ensalamento.pkl'
+
+with open(file_path, 'rb') as f:
     x_drying_training, y_drying_training, x_drying_test, y_drying_test = pickle.load(f)
 
 tree_drying = DecisionTreeClassifier(criterion='entropy', random_state=0)
 tree_drying.fit(x_drying_training, y_drying_training)
 
+# Mapeamento para os horários
+HORARIOS_MAP = {
+    '08:00': 0, '09:00': 1, '10:00': 2, '11:00': 3, '12:00': 4, '13:00': 5,
+    '14:00': 6, '15:00': 7, '16:00': 8, '17:00': 9, '18:00': 10, '19:00': 11,
+    '20:00': 12, '21:00': 13
+}
+
+# Função para converter os dias da semana em uma lista binária
+def days_to_binary(days_week):
+    days_map = {'SEG': 0, 'TER': 1, 'QUA': 2, 'QUI': 3, 'SEX': 4, 'SAB': 5}
+    binary_list = [0] * 6  # Segunda a Sábado
+    if days_week in days_map:
+        binary_list[days_map[days_week]] = 1
+    return binary_list
+
 def drying_predict(time, days_week):
-    input_data = [[time, days_week]]
+    # Converte o horário para o formato numérico
+    time_value = HORARIOS_MAP.get(time, -1)
+
+    # Converte os dias da semana para uma lista binária
+    days_list = days_to_binary(days_week)
+
+    # Cria o input_data com o horário e a lista binária dos dias
+    input_data = np.array([[time_value] + days_list])
+
+    # Faz a previsão
     prediction = tree_drying.predict(input_data)
     return prediction
 
@@ -331,20 +359,42 @@ def generate_ensalamento(request):
     if request.method == 'POST':
         try:
             allocations = Allocation.objects.all()
-
             for allocation in allocations:
                 time = allocation.timetable
                 days_week = allocation.days_week
 
+                print(f"Predicting for time={time}, days_week={days_week}")
+
                 prediction = drying_predict(time, days_week)
+                print(f"Prediction result: {prediction}")
 
-                space = PhysicalSpace.objects.get(id=prediction[0])
+                predicted_space = prediction[0]  # '205-a'
+                try:
+                    # Extrair a parte numérica e a vogal
+                    space_number = int(predicted_space.split('-')[0])
+                    space_block = predicted_space.split('-')[1]
 
+                    # Validar se a vogal está no formato esperado (uma letra)
+                    if len(space_block) != 1 or not space_block.isalpha():
+                        raise ValueError(f"Invalid space block format: {space_block}")
+
+                    # Consultar o espaço físico com base nos números e blocos
+                    space = PhysicalSpace.objects.get(space_number=space_number, space_block=space_block)
+                    print(f"Found space: {space}")  # Log de depuração
+                except PhysicalSpace.DoesNotExist:
+                    print(f"PhysicalSpace with number {space_number} and block {space_block} does not exist.")  # Log de erro
+                    continue
+                except ValueError as ve:
+                    print(f"ValueError: {ve}")  # Log de erro
+                    continue
+
+                # Atualizar a alocação com o espaço físico encontrado
                 allocation.space = space
                 allocation.save()
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
+            print(f"Error occurred: {e}")  # Log de erro
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     else:
         return JsonResponse({'status': 'error'}, status=405)

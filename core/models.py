@@ -49,7 +49,6 @@ class Allocation(models.Model):
         ('QUI', 'Quinta-feira'),
         ('SEX', 'Sexta-feira'),
         ('SAB', 'Sábado'),
-        ('DOM', 'Domingo'),
     ]
     HORARIOS = [
         ('08:00', '08:00 - 09:00'),
