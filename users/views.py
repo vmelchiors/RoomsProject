@@ -311,16 +311,40 @@ def allocation_delete(request, pk):
 
 from django.http import JsonResponse
 
+import pickle
+from django.http import JsonResponse
+from core.models import Teacher, Discipline, PhysicalSpace, Allocation
+from sklearn.tree import DecisionTreeClassifier
+
+with open('./ensalamento.pkl', 'rb') as f:
+    x_drying_training, y_drying_training, x_drying_test, y_drying_test = pickle.load(f)
+
+tree_drying = DecisionTreeClassifier(criterion='entropy', random_state=0)
+tree_drying.fit(x_drying_training, y_drying_training)
+
+def drying_predict(time, days_week):
+    input_data = [[time, days_week]]
+    prediction = tree_drying.predict(input_data)
+    return prediction
+
 def generate_ensalamento(request):
     if request.method == 'POST':
-        # Lógica para gerar o ensalamento
-        # Por exemplo, chamar uma função que realiza o ensalamento
-        # e retornar uma resposta de sucesso
-        success = True  # Substitua pela lógica real
+        try:
+            allocations = Allocation.objects.all()
 
-        if success:
+            for allocation in allocations:
+                time = allocation.timetable
+                days_week = allocation.days_week
+
+                prediction = drying_predict(time, days_week)
+
+                space = PhysicalSpace.objects.get(id=prediction[0])
+
+                allocation.space = space
+                allocation.save()
+
             return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error'}, status=500)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     else:
         return JsonResponse({'status': 'error'}, status=405)
