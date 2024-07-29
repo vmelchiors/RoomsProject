@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,96 +7,95 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/rooms.css' %}" />
-    <title>Ensalmentos</title>
+    <title>Ensalamentos</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <header>
-        <div class="logo">Rooms</div>
-        <div class="login" id="back-button">Voltar</div>
-    </header>
-    <h1 class="nome">Ensalamentos</h1>
-    <div class="buttonfiltros">
-        <button class="downefilt1" id="download-button" >Download</button>
-        <button class="downefilt2" id="filter-button" >Filtros</button>
-    </div>
-    <div class="filterclass" id="filter-section" style="display:none;">
-        <form id="filter-form">
-            <label for="course">Curso:</label>
-            <select id="course" name="course">
-                <option value="">Selecione um curso</option>
-                {% for course in courses %}
-                    <option value="{{ course }}">{{ course }}</option>
-                {% endfor %}
-            </select>
-            <button class="options" type="button" id="apply-filters">Aplicar Filtros</button>
-        </form>
-    </div>
-    <div class="tabelaens">
-        <table class="tabelastyle">
-            <thead>
-                <tr>
-                    <th>Professor</th>
-                    <th>Diciplina</th>
-                    <th>Sala</th>
-                    <th>Dia da Semana</th>
-                    <th>Horario</th>
-                </tr>
-            </thead>
-            <tbody id="allocation-list">
-                {% for allocation in allocations %}
-                    <tr>
-                        <td>{{ allocation.teacher }}</td>
-                        <td>{{ allocation.discipline }}</td>
-                        <td>{{ allocation.space }}</td>
-                        <td>{{ allocation.get_days_week_display }}</td>
-                        <td>{{ allocation.get_timetable_display }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <script>
-        $(document).ready(function(){
-            $('#filter-button').click(function(){
-                $('#filter-section').toggle();
-            });
+<header>
+    <div class="logo">Rooms</div>
+    <div class="login" id="back-button">Voltar</div>
+</header>
+<h1 class="nome">Ensalamentos</h1>
+<div class="buttonfiltros">
+    <button class="downefilt1" id="download-button">Download</button>
+    <button class="downefilt2" id="filter-button">Filtros</button>
+</div>
+<div class="filterclass" id="filter-section" style="display:none;">
+    <form id="filter-form">
+        <label for="course">Curso:</label>
+        <select id="course" name="course">
+            <option value="">Selecione um curso</option>
+            {% for course in courses %}
+                <option value="{{ course }}">{{ course }}</option>
+            {% endfor %}
+        </select>
+        <button class="options" type="button" id="apply-filters">Aplicar Filtros</button>
+    </form>
+</div>
+<div class="tabelaens">
+    <table class="tabelastyle">
+        <thead>
+        <tr>
+            <th>Professor</th>
+            <th>Diciplina</th>
+            <th>Sala</th>
+            <th>Dia da Semana</th>
+            <th>Horario</th>
+        </tr>
+        </thead>
+        <tbody id="allocation-list">
+        {% for allocation in allocations %}
+            <tr>
+                <td>{{ allocation.teacher }}</td>
+                <td>{{ allocation.discipline }}</td>
+                <td>{{ allocation.space }}</td>
+                <td>{{ allocation.get_days_week_display }}</td>
+                <td>{{ allocation.get_timetable_display }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#filter-button').click(function() {
+            $('#filter-section').toggle();
+        });
 
-            $('#apply-filters').click(function(){
-                $.ajax({
-                    url: '{% url "allocation_list" %}',
-                    type: 'GET',
-                    data: $('#filter-form').serialize(),
-                    success: function(response) {
-                        var tbody = $('#allocation-list');
-                        tbody.empty();
-                        response.allocations.forEach(function(allocation) {
-                            var row = '<tr>' +
-                                '<td>' + allocation.teacher + '</td>' +
-                                '<td>' + allocation.discipline + '</td>' +
-                                '<td>' + allocation.space + '</td>' +
-                                '<td>' + allocation.days_week + '</td>' +
-                                '<td>' + allocation.timetable + '</td>' +
-                                '</tr>';
-                            tbody.append(row);
-                        });
-                    },
-                    error: function(response) {
-                        alert('Erro ao aplicar filtros.');
-                    }
-                });
-            });
-
-            $('#download-button').click(function(){
-                var course = $('#course').val();
-                var downloadUrl = '{% url "download_allocations_pdf" %}?course=' + course;
-                window.location.href = downloadUrl;
-            });
-
-            $('#back-button').click(function(){
-                window.history.back();
+        $('#apply-filters').click(function() {
+            $.ajax({
+                url: '{% url "allocation_list" %}',
+                type: 'GET',
+                data: $('#filter-form').serialize(),
+                success: function(response) {
+                    var tbody = $('#allocation-list');
+                    tbody.empty();
+                    response.allocations.forEach(function(allocation) {
+                        var row = '<tr>' +
+                            '<td>' + allocation.teacher + '</td>' +
+                            '<td>' + allocation.discipline + '</td>' +
+                            '<td>' + allocation.space + '</td>' +
+                            '<td>' + allocation.days_week + '</td>' +
+                            '<td>' + allocation.timetable + '</td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    });
+                },
+                error: function() {
+                    alert('Erro ao aplicar filtros.');
+                }
             });
         });
-    </script>
+
+        $('#download-button').click(function() {
+            var downloadUrl = '{% url "download_allocations_pdf" %}';
+            window.location.href = downloadUrl;
+        });
+
+        $('#back-button').click(function() {
+            window.history.back();
+        });
+    });
+</script>
 </body>
 </html>
