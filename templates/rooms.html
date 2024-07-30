@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/planilhas.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/rooms.css' %}" />
     <title>Ensalamentos</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -21,7 +20,7 @@
     <button class="downefilt1" id="download-button">Download</button>
     <button class="downefilt2" id="filter-button">Filtros</button>
 </div>
-<div id="filter-section" style="display:none;">
+<div class="filterclass" id="filter-section" style="display:none;">
     <form id="filter-form">
         <label for="course">Curso:</label>
         <select id="course" name="course">
@@ -30,7 +29,7 @@
                 <option value="{{ course }}">{{ course }}</option>
             {% endfor %}
         </select>
-        <button type="button" id="apply-filters">Aplicar Filtros</button>
+        <button class="options" type="button" id="apply-filters">Aplicar Filtros</button>
     </form>
 </div>
 <div class="tabelaens">
@@ -38,10 +37,10 @@
         <thead>
         <tr>
             <th>Professor</th>
-            <th>Disciplina</th>
+            <th>Diciplina</th>
             <th>Sala</th>
             <th>Dia da Semana</th>
-            <th>Horário</th>
+            <th>Horario</th>
         </tr>
         </thead>
         <tbody id="allocation-list">
@@ -57,14 +56,13 @@
         </tbody>
     </table>
 </div>
-
 <script>
-    $(document).ready(function(){
-        $('#filter-button').click(function(){
+    $(document).ready(function() {
+        $('#filter-button').click(function() {
             $('#filter-section').toggle();
         });
 
-        $('#apply-filters').click(function(){
+        $('#apply-filters').click(function() {
             $.ajax({
                 url: '{% url "allocation_list" %}',
                 type: 'GET',
@@ -83,19 +81,18 @@
                         tbody.append(row);
                     });
                 },
-                error: function(response) {
+                error: function() {
                     alert('Erro ao aplicar filtros.');
                 }
             });
         });
 
-        $('#download-button').click(function(){
-            var course = $('#course').val();
-            var downloadUrl = '{% url "download_allocations_pdf" %}?course=' + course;
+        $('#download-button').click(function() {
+            var downloadUrl = '{% url "download_allocations_pdf" %}';
             window.location.href = downloadUrl;
         });
 
-        $('#back-button').click(function(){
+        $('#back-button').click(function() {
             window.history.back();
         });
     });

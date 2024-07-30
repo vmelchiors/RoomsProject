@@ -1,31 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
     <title>Register</title>
 </head>
 <body>
-<h2>Registrar</h2>
-{% if messages %}
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
+<h1>Registrar</h1>
+<div class="errormid">
+    {% if messages %}
     {% for message in messages %}
         <p style="color: red;">{{ message }}</p>
     {% endfor %}
 {% endif %}
+</div>
 <form method="post">
     {% csrf_token %}
     <label for="username">Nome de usuário:</label>
-    <input type="text" name="username" id="username" required><br>
+    <input class="textclass" type="text" name="username" id="username" required><br>
 
     <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required><br>
+    <input class="textclass" type="email" name="email" id="email" required><br>
 
     <label for="password">Senha:</label>
-    <input type="password" name="password" id="password" required><br>
+    <input class="textclass" type="password" name="password" id="password" required><br>
 
     <label for="password_confirm">Confirme a senha:</label>
-    <input type="password" name="password_confirm" id="password_confirm" required><br>
+    <input class="textclass" type="password" name="password_confirm" id="password_confirm" required><br>
 
-    <button type="submit">Registrar</button>
+    <button class="buttonlogin" type="submit">Registrar</button>
 </form>
 </body>
 </html>

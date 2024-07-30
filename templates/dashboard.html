@@ -1,17 +1,41 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Painel Administrativo</h1>
-    <div>
-        <a href="{% url 'allocation_list' %}">Alocações</a><br>
-        <a href="{% url 'discipline_list' %}">Disciplinas</a><br>
-        <a href="{% url 'space_list' %}">Salas/Laboratórios</a><br>
-        <a href="{% url 'teacher_list' %}">Professores</a><br>
-        <a href="{% url 'register' %}">Usuários</a><br>
-    </div>    
+<header>
+    <div class="logo">Rooms</div>
+    <div class="login">Administrador</div>
+</header>
+<h1>Painel Administrativo</h1>
+<div class="dashboardList">
+    <a class="OPA" href="{% url 'allocation_list' %}">
+        <img class="imgtam" src="{% static 'imagens/alocacoes.png' %}" alt="Alocações">
+        <span>Alocações</span>
+    </a><br>
+    <a class="OPB" href="{% url 'discipline_list' %}">
+        <img class="imgtam" src="{% static 'imagens/disciplinas.png' %}" alt="Disciplinas">
+        <span>Disciplinas</span>
+    </a><br>
+</div>
+<div class="dashboardListB">
+    <a class="OPC" href="{% url 'space_list' %}">
+        <img class="imgtam" src="{% static 'imagens/laboratório.png' %}" alt="Salas/Labs">
+        <span>Salas/Labs</span>
+    </a><br>
+    <a class="OPD" href="{% url 'teacher_list' %}">
+        <img class="imgtam" src="{% static 'imagens/professor.png' %}" alt="Professores">
+        <span>Professores</span>
+    </a><br>
+    <a class="OPE" href="{% url 'register' %}">
+        <img class="imgtam" src="{% static 'imagens/usuários.png' %}" alt="Usuários">
+        <span>Usuários</span>
+    </a><br>
+</div>
 </body>
 </html>

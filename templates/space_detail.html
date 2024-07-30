@@ -1,17 +1,30 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/details.css' %}" />
     <title>Space Detail</title>
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Detalhes do Espaço Físico</h1>
     <p><strong>Andar:</strong> {{ space.space_floor }}</p>
     <p><strong>Número:</strong> {{ space.space_number }}</p>
     <p><strong>Bloco:</strong> {{ space.space_block }}</p>
     <p><strong>Tipo:</strong> {% if space.space_type %}Laboratório{% else %}Sala{% endif %}</p>
-    <a href="{% url 'space_update' pk=space.pk %}">Editar</a>
-    <a href="{% url 'space_delete' pk=space.pk %}">Excluir</a>
-    <a href="{% url 'space_list' %}">Voltar para a lista de espaços físicos</a>
+    <div class="options">
+        <div class="optionA">
+            <a class="optionAButton" href="{% url 'space_update' pk=space.pk %}">Editar</a>
+            <a class="optionBButton" href="{% url 'space_delete' pk=space.pk %}">Excluir</a>
+        </div>
+        <div class="return">
+            <a class="returnButton" href="{% url 'space_list' %}">Voltar para a lista de espaços físicos</a>
+        </div>
+    </div>
 </body>
 </html>

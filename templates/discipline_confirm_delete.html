@@ -1,16 +1,25 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Discipline Delete</title>
+    <link rel="stylesheet" href="{% static 'css/delete.css' %}" />
 </head>
 <body>
+    <header>
+        <div class="logo">Rooms</div>
+        <div class="login">Administrador</div>
+    </header>
     <h1>Confirmação de Exclusão</h1>
     <p>Você tem certeza que deseja excluir a disciplina "{{ discipline.discipline_name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Confirmar Exclusão</button>
+        <button class="button" type="submit">Confirmar Exclusão</button>
     </form>
-    <a href="{% url 'discipline_list' %}">Cancelar e voltar para a lista de disciplinas</a>
+    <div class="alignA">
+        <a class="return" href="{% url 'discipline_list' %}">Cancelar e voltar para a lista de disciplinas</a>
+    </div>
 </body>
 </html>

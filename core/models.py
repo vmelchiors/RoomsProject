@@ -49,23 +49,30 @@ class Allocation(models.Model):
         ('QUI', 'Quinta-feira'),
         ('SEX', 'Sexta-feira'),
         ('SAB', 'Sábado'),
-        ('DOM', 'Domingo'),
     ]
     HORARIOS = [
-        ('08:00', '08:00 - 10:00'),
-        ('10:00', '10:00 - 12:00'),
-        ('14:00', '14:00 - 16:00'),
-        ('16:00', '16:00 - 18:00'),
-        ('18:00', '18:00 - 20:00'),
-        ('20:00', '20:00 - 22:00'),
+        ('08:00', '08:00 - 09:00'),
+        ('09:00', '09:00 - 10:00'),
+        ('10:00', '10:00 - 11:00'),
+        ('11:00', '11:00 - 12:00'),
+        ('12:00', '12:00 - 13:00'),
+        ('13:00', '13:00 - 14:00'),
+        ('14:00', '14:00 - 15:00'),
+        ('15:00', '15:00 - 16:00'),
+        ('16:00', '16:00 - 17:00'),
+        ('17:00', '17:00 - 18:00'),
+        ('18:00', '18:00 - 19:00'),
+        ('19:00', '19:00 - 20:00'),
+        ('20:00', '20:00 - 21:00'),
+        ('21:00', '21:00 - 22:00'),
     ]
 
     allocation_id = models.AutoField(primary_key=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
     space = models.ForeignKey(PhysicalSpace, on_delete=models.SET_NULL, null=True, blank=True)
-    days_week = models.CharField(max_length=3, choices=DIAS_DA_SEMANA, unique=True)
-    timetable = models.CharField(max_length=5, choices=HORARIOS, unique=True)
+    days_week = models.CharField(max_length=3, choices=DIAS_DA_SEMANA)
+    timetable = models.CharField(max_length=5, choices=HORARIOS)
 
     def __str__(self):
         return f'{self.teacher} - {self.discipline} - {self.space} - {self.timetable}'

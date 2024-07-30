@@ -33,9 +33,13 @@ def allocation_list(request):
         return render(request, 'rooms.html', {'allocations': allocations, 'courses': courses})
 
 
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+
 def download_allocations_pdf(request):
     allocations = Allocation.objects.all()
-
     course = request.GET.get('course')
 
     if course:
@@ -47,17 +51,29 @@ def download_allocations_pdf(request):
     p = canvas.Canvas(response, pagesize=letter)
     width, height = letter
 
-    p.drawString(100, height - 100, "Lista de Alocações")
-    y = height - 120
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(100, height - 50, "Lista de Alocações")
+
+    p.setFont("Helvetica", 12)
+    y = height - 80
 
     for allocation in allocations:
         p.drawString(100, y, f"Professor: {allocation.teacher}")
-        p.drawString(200, y, f"Disciplina: {allocation.discipline}")
-        p.drawString(300, y, f"Sala: {allocation.space}")
-        p.drawString(400, y, f"Dia da Semana: {allocation.get_days_week_display()}")
-        p.drawString(500, y, f"Horário: {allocation.get_timetable_display()}")
-        y -= 20
+        y -= 15
+        p.drawString(100, y, f"Disciplina: {allocation.discipline}")
+        y -= 15
+        p.drawString(100, y, f"Sala: {allocation.space}")
+        y -= 15
+        p.drawString(100, y, f"Dia da Semana: {allocation.get_days_week_display()}")
+        y -= 15
+        p.drawString(100, y, f"Horário: {allocation.get_timetable_display()}")
+        y -= 25
+        if y < 100:
+            p.showPage()
+            p.setFont("Helvetica", 12)
+            y = height - 50
 
     p.showPage()
     p.save()
     return response
+

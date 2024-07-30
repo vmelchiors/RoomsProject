@@ -228,16 +228,21 @@ def allocation_create(request):
         timetable = request.POST.get('timetable')
         space_id = request.POST.get('space')
 
+        teacher = get_object_or_404(Teacher, pk=teacher_id)
+        discipline = get_object_or_404(Discipline, pk=discipline_id)
+        space = get_object_or_404(PhysicalSpace, pk=space_id) if space_id else None
+
         try:
-            teacher = get_object_or_404(Teacher, pk=teacher_id)
-            discipline = get_object_or_404(Discipline, pk=discipline_id)
-            space = get_object_or_404(PhysicalSpace, pk=space_id) if space_id else None
-
-            Allocation.objects.create(teacher=teacher, discipline=discipline, space=space, days_week=days_week, timetable=timetable)
+            Allocation.objects.create(
+                teacher=teacher,
+                discipline=discipline,
+                space=space,
+                days_week=days_week,
+                timetable=timetable
+            )
             return redirect('allocation_list')
-
         except IntegrityError:
-            error_message = 'Já existe uma alocação com estes dados.'
+            error_message = 'Já existe uma alocação com este horário.'
             context = {
                 'teachers': teachers,
                 'disciplines': disciplines,
@@ -305,17 +310,84 @@ def allocation_delete(request, pk):
     return render(request, 'allocation_confirm_delete.html', {'allocation': allocation})
 
 from django.http import JsonResponse
+from core.models import Teacher, Discipline, PhysicalSpace, Allocation
+from sklearn.tree import DecisionTreeClassifier
+import pickle
+from pathlib import Path
+import numpy as np
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+file_path = BASE_DIR / 'Predict' / 'ensalamento.pkl'
+
+with open(file_path, 'rb') as f:
+    x_drying_training, y_drying_training, x_drying_test, y_drying_test = pickle.load(f)
+
+tree_drying = DecisionTreeClassifier(criterion='entropy', random_state=0)
+tree_drying.fit(x_drying_training, y_drying_training)
+
+
+HORARIOS_MAP = {
+    '08:00': 0, '09:00': 1, '10:00': 2, '11:00': 3, '12:00': 4, '13:00': 5,
+    '14:00': 6, '15:00': 7, '16:00': 8, '17:00': 9, '18:00': 10, '19:00': 11,
+    '20:00': 12, '21:00': 13
+}
+
+def days_to_binary(days_week):
+    days_map = {'SEG': 0, 'TER': 1, 'QUA': 2, 'QUI': 3, 'SEX': 4, 'SAB': 5}
+    binary_list = [0] * 6
+    if days_week in days_map:
+        binary_list[days_map[days_week]] = 1
+    return binary_list
+
+def drying_predict(time, days_week):
+
+    time_value = HORARIOS_MAP.get(time, -1)
+
+    days_list = days_to_binary(days_week)
+
+    input_data = np.array([[time_value] + days_list])
+
+    prediction = tree_drying.predict(input_data)
+    return prediction
 
 def generate_ensalamento(request):
     if request.method == 'POST':
-        # Lógica para gerar o ensalamento
-        # Por exemplo, chamar uma função que realiza o ensalamento
-        # e retornar uma resposta de sucesso
-        success = True  # Substitua pela lógica real
+        try:
+            allocations = Allocation.objects.all()
+            for allocation in allocations:
+                time = allocation.timetable
+                days_week = allocation.days_week
 
-        if success:
+                print(f"Predicting for time={time}, days_week={days_week}")
+
+                prediction = drying_predict(time, days_week)
+                print(f"Prediction result: {prediction}")
+
+                predicted_space = prediction[0]
+                try:
+
+                    space_number = int(predicted_space.split('-')[0])
+                    space_block = predicted_space.split('-')[1]
+
+                    if len(space_block) != 1 or not space_block.isalpha():
+                        raise ValueError(f"Invalid space block format: {space_block}")
+
+                    space = PhysicalSpace.objects.get(space_number=space_number, space_block=space_block)
+                    print(f"Found space: {space}")
+                except PhysicalSpace.DoesNotExist:
+                    print(f"PhysicalSpace with number {space_number} and block {space_block} does not exist.")
+                    continue
+                except ValueError as ve:
+                    print(f"ValueError: {ve}")
+                    continue
+
+                allocation.space = space
+                allocation.save()
+
             return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error'}, status=500)
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     else:
         return JsonResponse({'status': 'error'}, status=405)
