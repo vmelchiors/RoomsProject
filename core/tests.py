@@ -377,7 +377,7 @@ class AllocationDeleteViewTest(TestCase):
         self.physical_space = PhysicalSpace.objects.create(
             space_number=101,
             space_block='A',
-            space_floor=1 , # Adicione um valor para space_floor
+            space_floor=1 ,
             space_type=True
         )
 
