@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
+        <div class="login" id="back-button">Voltar</div>
     </header>
 <h1>Registrar</h1>
 <div class="errormid">
@@ -36,5 +36,10 @@
 
     <button class="buttonlogin" type="submit">Registrar</button>
 </form>
+<script>
+        $('#back-button').click(function(){
+            window.history.back();
+       });
+    </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
+        <div class="login" id="back-button">Voltar</div>
     </header>
     <h1>Detalhes do Professor</h1>
     <p><strong>Nome:</strong> {{ teacher.first_name }} {{ teacher.last_name }}</p>
@@ -24,5 +24,10 @@
             <a class="returnButton" href="{% url 'teacher_list' %}">Voltar para a lista de professores</a>
         </div>
     </div>
+<script>
+        $('#back-button').click(function(){
+            window.history.back();
+       });
+    </script>
 </body>
 </html>
