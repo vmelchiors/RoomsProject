@@ -22,7 +22,14 @@
 <div class="contentList">
     <ul id="allocation-list">
         {% for allocation in allocations %}
-            <li class="optionList">{{ allocation.teacher }} - {{ allocation.discipline }} - {{ allocation.space }} - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}
+            <li class="optionList">{{ allocation.teacher }} - {{ allocation.discipline }} -
+                {% if allocation.space %}
+                    {{ allocation.space }}
+                {% else %}
+                    Não Alocado
+                {% endif %}
+
+                - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}
                 (<a class="options" href="{% url 'allocation_detail' pk=allocation.pk %}">Detalhes</a>)
                 (<a class="options" href="{% url 'allocation_update' pk=allocation.pk %}">Editar</a>)
                 (<a class="optionsE" href="{% url 'allocation_delete' pk=allocation.pk %}">Excluir</a>)

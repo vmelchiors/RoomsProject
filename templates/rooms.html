@@ -48,7 +48,13 @@
             <tr>
                 <td>{{ allocation.teacher }}</td>
                 <td>{{ allocation.discipline }}</td>
-                <td>{{ allocation.space }}</td>
+                <td>
+                    {% if allocation.space %}
+                        {{ allocation.space }}
+                    {% else %}
+                        Não Alocado
+                    {% endif %}
+                </td>
                 <td>{{ allocation.get_days_week_display }}</td>
                 <td>{{ allocation.get_timetable_display }}</td>
             </tr>
