@@ -3,7 +3,7 @@
 Este projeto é uma solução para a criação de ensalamento dinâmico na universidade, com foco em melhorar a alocação de salas e horários para as disciplinas por meio de uma aplicação web e inteligencia artificial, 
 otimizando o uso dos espaços físicos e melhorando o desempenho acadêmico.
 
-![Documentação](Docs/Documento de requisitos.pdf)
+[Documentação](Docs/Documentoderequisitos.pdf)
 
 ![Home](Docs/home.png)
 
