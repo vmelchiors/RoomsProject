@@ -5,6 +5,9 @@ from django.shortcuts import render
 from .models import Allocation, Discipline
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
 
 def index(request):
     return render(request, 'index.html')

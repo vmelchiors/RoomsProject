@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -24,6 +25,8 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'login.html', {'form': form})
+
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -51,14 +54,17 @@ def register_view(request):
 def dashboard_view(request):
     return render(request, 'dashboard.html')
 
+@login_required
 def teacher_list(request):
     teachers = Teacher.objects.all()
     return render(request, 'teacher_list.html', {'teachers': teachers})
 
+@login_required
 def teacher_detail(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     return render(request, 'teacher_detail.html', {'teacher': teacher})
 
+@login_required
 def teacher_create(request):
     if request.method == 'POST':
         siape = request.POST.get('siape')
@@ -74,6 +80,7 @@ def teacher_create(request):
 
     return render(request, 'teacher_form.html')
 
+@login_required
 def teacher_update(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
@@ -91,6 +98,8 @@ def teacher_update(request, pk):
             return render(request, 'teacher_form.html', {'teacher': teacher, 'error': error_message})
 
     return render(request, 'teacher_form.html', {'teacher': teacher})
+
+@login_required
 def teacher_delete(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
@@ -98,13 +107,17 @@ def teacher_delete(request, pk):
         return redirect('teacher_list')
     return render(request, 'teacher_confirm_delete.html', {'teacher': teacher})
 
+@login_required
 def discipline_list(request):
     disciplines = Discipline.objects.all()
     return render(request, 'discipline_list.html', {'disciplines': disciplines})
 
+@login_required
 def discipline_detail(request, pk):
     discipline = get_object_or_404(Discipline, pk=pk)
     return render(request, 'discipline_detail.html', {'discipline': discipline})
+
+@login_required
 def discipline_create(request):
     if request.method == 'POST':
         discipline_name = request.POST.get('discipline_name')
@@ -126,6 +139,7 @@ def discipline_create(request):
 
     return render(request, 'discipline_form.html')
 
+@login_required
 def discipline_update(request, pk):
     discipline = get_object_or_404(Discipline, pk=pk)
     if request.method == 'POST':
@@ -144,6 +158,8 @@ def discipline_update(request, pk):
             return render(request, 'discipline_form.html', {'discipline': discipline, 'error': error_message})
 
     return render(request, 'discipline_form.html', {'discipline': discipline})
+
+@login_required
 def discipline_delete(request, pk):
     discipline = get_object_or_404(Discipline, pk=pk)
     if request.method == 'POST':
@@ -151,14 +167,17 @@ def discipline_delete(request, pk):
         return redirect('discipline_list')
     return render(request, 'discipline_confirm_delete.html', {'discipline': discipline})
 
+@login_required
 def space_list(request):
     spaces = PhysicalSpace.objects.all()
     return render(request, 'space_list.html', {'spaces': spaces})
 
+@login_required
 def space_detail(request, pk):
     space = get_object_or_404(PhysicalSpace, pk=pk)
     return render(request, 'space_detail.html', {'space': space})
 
+@login_required
 def space_create(request):
     if request.method == 'POST':
         space_floor = request.POST.get('space_floor')
@@ -179,6 +198,7 @@ def space_create(request):
 
     return render(request, 'space_form.html')
 
+@login_required
 def space_update(request, pk):
     space = get_object_or_404(PhysicalSpace, pk=pk)
 
@@ -199,6 +219,8 @@ def space_update(request, pk):
             return render(request, 'space_form.html', {'space': space, 'error': str(e)})
 
     return render(request, 'space_form.html', {'space': space})
+
+@login_required
 def space_delete(request, pk):
     space = get_object_or_404(PhysicalSpace, pk=pk)
     if request.method == 'POST':
@@ -206,14 +228,17 @@ def space_delete(request, pk):
         return redirect('space_list')
     return render(request, 'space_confirm_delete.html', {'space': space})
 
+@login_required
 def allocation_list(request):
     allocations = Allocation.objects.all()
     return render(request, 'allocation_list.html', {'allocations': allocations})
 
+@login_required
 def allocation_detail(request, pk):
     allocation = get_object_or_404(Allocation, pk=pk)
     return render(request, 'allocation_detail.html', {'allocation': allocation})
 
+@login_required
 def allocation_create(request):
     teachers = Teacher.objects.all()
     disciplines = Discipline.objects.all()
@@ -262,6 +287,7 @@ def allocation_create(request):
     }
     return render(request, 'allocation_form.html', context)
 
+@login_required
 def allocation_update(request, pk):
     allocation = get_object_or_404(Allocation, pk=pk)
     teachers = Teacher.objects.all()
@@ -300,6 +326,7 @@ def allocation_update(request, pk):
     }
     return render(request, 'allocation_form.html', context)
 
+@login_required
 def allocation_delete(request, pk):
     allocation = get_object_or_404(Allocation, pk=pk)
 
@@ -333,6 +360,7 @@ HORARIOS_MAP = {
     '20:00': 12, '21:00': 13
 }
 
+
 def days_to_binary(days_week):
     days_map = {'SEG': 0, 'TER': 1, 'QUA': 2, 'QUI': 3, 'SEX': 4, 'SAB': 5}
     binary_list = [0] * 6
@@ -351,6 +379,7 @@ def drying_predict(time, days_week):
     prediction = tree_drying.predict(input_data)
     return prediction
 
+@login_required
 def generate_ensalamento(request):
     if request.method == 'POST':
         try:
