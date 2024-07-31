@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
+        <div class="login" id="back-button">Voltar</div>
     </header>
 <h1>{% if space %}Editar Espaço Físico{% else %}Adicionar Novo Espaço Físico{% endif %}</h1>
 
@@ -47,5 +47,10 @@
         </div>
     </div>
 </form>
+<script>
+        $('#back-button').click(function(){
+            window.history.back();
+       });
+    </script>
 </body>
 </html>

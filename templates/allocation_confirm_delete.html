@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="logo">Rooms</div>
-        <div class="login">Administrador</div>
+        <div class="login" id="back-button">Voltar</div>
     </header>
     <h1>Confirmação de Exclusão</h1>
     <p>Você tem certeza que deseja excluir a alocação de <br> {{ allocation.teacher }} - {{ allocation.discipline }} - {{ allocation.space }} - {{ allocation.get_days_week_display }} - {{ allocation.get_timetable_display }}?<br>Esta ação não é reversível!</p>
@@ -21,5 +21,10 @@
     <div class="alignA">
         <a class="return" href="{% url 'allocation_list' %}">Cancelar e voltar para a lista de alocações</a>
     </div>
+    <script>
+        $('#back-button').click(function(){
+            window.history.back();
+       });
+    </script>
 </body>
 </html>
