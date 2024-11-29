@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/list.css' %}" />
     <title>Space List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header>
@@ -30,10 +31,10 @@
     <div class="alignA">
         <a class="return" href="{% url 'space_create' %}">Adicionar Novo Espaço Físico</a>
     </div>
-<script>
+    <script>
         $('#back-button').click(function(){
             window.history.back();
        });
-</script>
+    </script>
 </body>
 </html>
