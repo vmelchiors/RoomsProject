@@ -49,7 +49,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'RoomsProject.wsgi.application'
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Rooms',
@@ -57,6 +57,12 @@ DATABASES = {
         'PASSWORD': 'marcioeric10',
         'HOST': 'localhost',
         'PORT': '3306',
+    }
+}"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

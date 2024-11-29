@@ -28,13 +28,23 @@ Este projeto foi desenvolvido para automatizar o processo de ensalamento na Univ
 1. Clone este repositório:
    ```bash
    git clone https://github.com/seu-usuario/seu-repositorio.git
-2. Instale as dependências do projeto:
+2. Instale as dependências do projeto em um ambiente virtual:
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate
    pip install -r requirements.txt
-3. Configure o banco de dados
+3. Configure o banco de dados(Settings.py)
+   ```bash
+   DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+   }
+4. Migre as tabelas para o banco de dados
    ```bash
    python manage.py migrate
-4. Inicie o servidor:
+5. Inicie o servidor:
    ```bash
    python manage.py runserver
 
